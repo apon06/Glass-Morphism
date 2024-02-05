@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GlassEditor extends StatefulWidget {
@@ -61,38 +60,38 @@ class _GlassEditorState extends State<GlassEditor> {
                         imageUrl: imageUrl,
                         imageBuilder: (context, imageProvider) {
                           return Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: imageProvider,
-
-                                // image: AssetImage(imageUrl)
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: imageProvider,
+                               
+                              // image: AssetImage(imageUrl)
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(borderRadius),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(
+                                sigmaX: sigmaX,
+                                sigmaY: sigmaY,
+                              ),
+                              child: Container(
+                                height: height,
+                                width: width,
+                                decoration: BoxDecoration(
+                                    color: Colors.white
+                                        .withOpacity(colorOpacity / 100),
+                                    borderRadius:
+                                        BorderRadius.circular(borderRadius),
+                                    border: Border.all(
+                                        width: border, color: Colors.white30)),
                               ),
                             ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(borderRadius),
-                              child: BackdropFilter(
-                                filter: ImageFilter.blur(
-                                  sigmaX: sigmaX,
-                                  sigmaY: sigmaY,
-                                ),
-                                child: Container(
-                                  height: height,
-                                  width: width,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white
-                                          .withOpacity(colorOpacity / 100),
-                                      borderRadius:
-                                          BorderRadius.circular(borderRadius),
-                                      border: Border.all(
-                                          width: border,
-                                          color: Colors.white30)),
-                                ),
-                              ),
-                            ),
-                          );
+                          ),
+                        );
                         },
+                        
                       ),
                     ),
                     const VerticalDivider(
