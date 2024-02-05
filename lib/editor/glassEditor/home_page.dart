@@ -1,7 +1,8 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:icons_plus/icons_plus.dart';
+// import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GlassEditor extends StatefulWidget {
@@ -13,8 +14,8 @@ class GlassEditor extends StatefulWidget {
 
 class _GlassEditorState extends State<GlassEditor> {
   String imageUrl = '';
-  double height = 100;
-  double width = 100;
+  double height = 200;
+  double width = 200;
   double sigmaX = 5;
   double sigmaY = 5;
   double borderRadius = 10;
@@ -43,7 +44,7 @@ class _GlassEditorState extends State<GlassEditor> {
                     ),
                     Spacer(),
                     UrlLauncher(
-                      url: 'https://github.com/apon06',
+                      url: 'https://github.com/apon06/Glass-Morphism',
                       text: 'github code',
                     ),
                     Spacer(),
@@ -56,35 +57,42 @@ class _GlassEditorState extends State<GlassEditor> {
                   children: [
                     SizedBox(
                       width: 392,
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(imageUrl),
-                            // image: AssetImage(imageUrl)
-                          ),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(borderRadius),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: sigmaX,
-                              sigmaY: sigmaY,
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrl,
+                        imageBuilder: (context, imageProvider) {
+                          return Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: imageProvider,
+
+                                // image: AssetImage(imageUrl)
+                              ),
                             ),
-                            child: Container(
-                              height: height,
-                              width: width,
-                              decoration: BoxDecoration(
-                                  color: Colors.white
-                                      .withOpacity(colorOpacity / 100),
-                                  borderRadius:
-                                      BorderRadius.circular(borderRadius),
-                                  border: Border.all(
-                                      width: border, color: Colors.white30)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(borderRadius),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: sigmaX,
+                                  sigmaY: sigmaY,
+                                ),
+                                child: Container(
+                                  height: height,
+                                  width: width,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white
+                                          .withOpacity(colorOpacity / 100),
+                                      borderRadius:
+                                          BorderRadius.circular(borderRadius),
+                                      border: Border.all(
+                                          width: border,
+                                          color: Colors.white30)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                          );
+                        },
                       ),
                     ),
                     const VerticalDivider(
@@ -262,7 +270,10 @@ class UrlLauncher extends StatelessWidget {
           await launchUrlString(url);
         }
       },
-      icon: const Icon(AntDesign.github_fill),
+      icon: Image.network(
+        'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg040QzB9VihlcNRZysvUmBr-482AO86-urF2dC8nGvES-1LWvoWFzXWly1CF6HzKzTv5LKTbjxQ1BsEmU2SO7YNG8mUWxLDn38IFw4WujuNjVGv7uQp1EXgHyHGLRh4m_ShlKyNfAki9oEqLVfSdcEHBp1OEewLjUhD1F-c8x0KNGGY2pLSmmoJqspCVs/s240/github-mark.png',
+        height: 25,
+      ),
       label: Text(text),
     );
   }
